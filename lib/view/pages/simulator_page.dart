@@ -14,7 +14,7 @@ class _SimulatorPageState extends State<SimulatorPage> {
   ValueNotifier<double> currentValue = ValueNotifier(0.0);
   double monthValue = 0;
   double riskValue = 0;
-  String riskLabel = '';
+  String riskLabel = 'Conservador';
   String year = '2024';
   double totalPoupanca = 0;
   double totalSelic = 0;
@@ -48,7 +48,7 @@ class _SimulatorPageState extends State<SimulatorPage> {
                 ),
                 const SizedBox(width: 16),
                 Text(
-                  'R\$ ${currentValue.value.round()}',
+                  'R\$ ${currentValue.value.round().toStringAsFixed(2)}',
                   style: AppTextStyles.profileData
                       .copyWith(color: Colors.green.shade400),
                 ),
@@ -68,6 +68,7 @@ class _SimulatorPageState extends State<SimulatorPage> {
                   onChanged: (double value) {
                     setState(() {
                       currentValue.value = value;
+                      balance = value;
                     });
                   }),
             ),
@@ -120,8 +121,8 @@ class _SimulatorPageState extends State<SimulatorPage> {
             ),
             Center(
               child: Slider(
-                  divisions: 3,
-                  max: 3.0,
+                  divisions: 2,
+                  max: 2.0,
                   min: 0.0,
                   activeColor: AppColors.primary,
                   label: riskLabel,
@@ -129,12 +130,10 @@ class _SimulatorPageState extends State<SimulatorPage> {
                   onChanged: (double value) {
                     setState(() {
                       riskValue = value;
-                      if (riskValue == 1.0) {
+                      if (riskValue == 0) {
                         riskLabel = 'Conservador';
-                      } else if (riskValue == 2.0) {
+                      } else if (riskValue == 1) {
                         riskLabel = 'Estrategista';
-                      } else if (riskValue == 0.0) {
-                        riskLabel = '**';
                       } else {
                         riskLabel = 'Arriscado';
                       }
