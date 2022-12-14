@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:system_finances/state/auth_state.dart';
 import 'package:system_finances/stores/auth_store.dart';
