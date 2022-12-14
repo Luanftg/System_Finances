@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:system_finances/controllers/login_controller.dart';
-import 'package:system_finances/repositories/login_repository_imp.dart';
+//import 'package:system_finances/controllers/login_controller.dart';
+import 'package:system_finances/repositories/auth_repository_imp.dart';
+//import 'package:system_finances/repositories/login_repository_imp.dart';
+import 'package:system_finances/stores/auth_store.dart';
 
 import '../components/login/custom_login_button_component.dart';
 import '../widgets/custom_text_field_widget.dart';
@@ -9,7 +11,9 @@ import '../widgets/custom_text_field_widget.dart';
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
-  final LoginController _controller = LoginController(LoginRepositoryImp());
+  //final LoginController _controller = LoginController(LoginRepositoryImp());
+  final AuthStore _controller = AuthStore(AuthRepositoryImp());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +29,7 @@ class LoginPage extends StatelessWidget {
             ),
             CustomTextFieldWidget(
               onChanged: _controller.setLogin,
-              label: 'Login',
+              label: 'Email',
             ),
             CustomTextFieldWidget(
               onChanged: _controller.setPass,
@@ -36,7 +40,16 @@ class LoginPage extends StatelessWidget {
               height: 15,
             ),
             CustomLoginButtonComponent(
-              loginControler: _controller,
+              isLogin: true,
+              label: 'Login',
+              buttonColor: Colors.green,
+              authStore: _controller,
+            ),
+            CustomLoginButtonComponent(
+              isLogin: false,
+              label: 'Register',
+              buttonColor: Colors.blue,
+              authStore: _controller,
             ),
           ],
         ),

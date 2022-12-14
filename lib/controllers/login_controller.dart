@@ -12,11 +12,12 @@ class LoginController {
   ValueNotifier<List<UserModel>> users = ValueNotifier<List<UserModel>>([]);
 
   String? _login;
+  String? _pass;
 
   LoginController(this._loginRepository);
+
   setLogin(String value) => _login = value;
 
-  String? _pass;
   setPass(String value) => _pass = value;
 
   Future<bool> auth() async {

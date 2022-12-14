@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:system_finances/models/user_model.dart';
 import 'package:system_finances/view/components/home/custom_linear_accounts.dart';
 
 class CustomCardHomeWidget extends StatelessWidget {
@@ -6,13 +7,15 @@ class CustomCardHomeWidget extends StatelessWidget {
   final String caminhoDaImagem;
   final String nomeDaConta;
   final String tipoDeConta;
+  final List<UserModel> users;
 
   const CustomCardHomeWidget(
       {Key? key,
       required this.saldo,
       required this.caminhoDaImagem,
       required this.nomeDaConta,
-      required this.tipoDeConta})
+      required this.tipoDeConta,
+      required this.users})
       : super(key: key);
 
   @override
@@ -52,16 +55,16 @@ class CustomCardHomeWidget extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
                       child: Column(
-                        children: const [
-                          Text('Saldo geral',
+                        children: [
+                          const Text('Saldo geral',
                               style: TextStyle(
                                 color: Colors.black54,
                                 decoration: TextDecoration.none,
                                 fontSize: 16,
                               )),
                           Text(
-                            'R\$ 18.212,23',
-                            style: TextStyle(
+                            'R\$ ${users[0].balance}',
+                            style: const TextStyle(
                               color: Colors.black87,
                               decoration: TextDecoration.none,
                               fontSize: 16,
@@ -98,18 +101,19 @@ class CustomCardHomeWidget extends StatelessWidget {
                 valor: '$saldo',
               ),
               const Divider(),
-              const CustomLinearAccounts(
-                  caminhoDaImagem:
-                      'https://play-lh.googleusercontent.com/pTvc9kCumx_24eJDwGUpvcBwljcIBkrsL3qHwhBW2NalMQ-XxTtHRV9YAJanBxkV0Rw',
-                  nomeDaConta: 'PicPay',
-                  tipoDeConta: 'Conta-Corrente',
-                  valor: '3.252,44'),
+              CustomLinearAccounts(
+                caminhoDaImagem:
+                    users[0].accountList![1].bandeira.caminhoDaImagem,
+                nomeDaConta: users[0].accountList![1].bandeira.nome,
+                tipoDeConta: tipoDeConta,
+                valor: (users[0].accountList![1].bandeira.balance).toString(),
+              ),
             ],
           ),
           //const Spacer(),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                fixedSize: const Size(300, 20), primary: Colors.green),
+                fixedSize: const Size(300, 20), backgroundColor: Colors.green),
             onPressed: () {},
             child: const Text('Gerenciar Contas'),
           ),

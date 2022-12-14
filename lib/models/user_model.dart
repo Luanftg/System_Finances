@@ -4,7 +4,7 @@ class UserModel {
   final String userId;
   final String name;
   final String image;
-  final double balance;
+  final double? balance;
   final List<Contas>? accountList;
   UserModel({
     required this.balance,
@@ -16,7 +16,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map json) {
     return UserModel(
-      balance: json['balance'],
+      balance: json['balance'] ?? 0,
       userId: json['userId'],
       name: json['name'],
       image: json['image'],
@@ -27,6 +27,11 @@ class UserModel {
             [],
       ),
     );
+  }
+
+  @override
+  String toString() {
+    return 'UserModel(userId: $userId, name: $name, image: $image, balance: $balance, accountList: $accountList)';
   }
 }
 
@@ -60,6 +65,10 @@ class Contas {
 
   factory Contas.fromJson(String source) =>
       Contas.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() =>
+      'Contas(bandeira: $bandeira, listaDeMovimentacao: $listaDeMovimentacao)';
 }
 
 class Movimentacao {
@@ -101,20 +110,28 @@ class Movimentacao {
 
   factory Movimentacao.fromJson(String source) =>
       Movimentacao.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Movimentacao(id: $id, eReceita: $eReceita, diaDeMovimentacao: $diaDeMovimentacao, valor: $valor, descricao: $descricao)';
+  }
 }
 
 class Bandeira {
   String nome;
   String caminhoDaImagem;
+  double balance;
   Bandeira({
     required this.nome,
     required this.caminhoDaImagem,
+    required this.balance,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'nome': nome,
       'imagem': caminhoDaImagem,
+      'balance': balance,
     };
   }
 
@@ -122,6 +139,7 @@ class Bandeira {
     return Bandeira(
       nome: map['nome'] as String,
       caminhoDaImagem: map['imagem'] as String,
+      balance: map['balance'] as double,
     );
   }
 
@@ -129,4 +147,8 @@ class Bandeira {
 
   factory Bandeira.fromJson(String source) =>
       Bandeira.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() =>
+      'Bandeira(nome: $nome, caminhoDaImagem: $caminhoDaImagem, balance: $balance)';
 }
