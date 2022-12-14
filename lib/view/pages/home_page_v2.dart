@@ -1,9 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:system_finances/main.dart';
-import 'package:system_finances/services/internet_connection_checker_service.dart';
 
 import 'package:system_finances/state/user_state.dart';
 import 'package:system_finances/stores/user_store.dart';
@@ -33,11 +29,6 @@ class _HomePageV2State extends State<HomePageV2> {
     final store = context.watch<UserStore>();
     final state = store.value;
     Widget? child;
-    final conection = InternetConnectionCheckerService.haveConnection();
-    conection.then((value) {
-      isConnected = value;
-      log(isConnected.toString());
-    });
 
     if (state is LoadindUserState) {
       child = const Center(
@@ -68,12 +59,10 @@ class _HomePageV2State extends State<HomePageV2> {
               child: Column(
                 children: [
                   CustomCardHomeWidget(
-                      users: state.users,
-                      caminhoDaImagem: state
-                          .users[0].accountList![0].bandeira.caminhoDaImagem,
-                      nomeDaConta: state.users[0].accountList![0].bandeira.nome,
+                      caminhoDaImagem: state.users[0].image,
+                      nomeDaConta: state.users[0].name,
                       tipoDeConta: 'Conta-Corrente',
-                      saldo: state.users[0].accountList![0].bandeira.balance),
+                      saldo: state.users[0].balance),
                   const CustomCreditCard(),
                 ],
               ),
@@ -100,9 +89,7 @@ class _HomePageV2State extends State<HomePageV2> {
                   icon: const Icon(Icons.home),
                 ),
                 IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/simulator');
-                  },
+                  onPressed: () {},
                   icon: const Icon(Icons.compare_arrows),
                 ),
                 FloatingActionButton.small(

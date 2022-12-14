@@ -1,4 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:system_finances/repositories/home_repository_imp.dart';
@@ -6,19 +5,11 @@ import 'package:system_finances/stores/user_store.dart';
 
 import 'package:system_finances/view/pages/home_page_v2.dart';
 import 'package:system_finances/view/pages/login_page.dart';
-import 'package:system_finances/view/pages/simulator_page.dart';
 import 'package:system_finances/view/pages/splash_page.dart';
 
 import 'constants/app_text_styles.dart';
-import 'firebase_options.dart';
 
-// ValueNotifier<bool> isDeviceConnected = ValueNotifier(false);
-bool isConnected = false;
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main() {
   runApp(const MyApp());
 }
 
@@ -38,11 +29,9 @@ class MyApp extends StatelessWidget {
           '/splash': (_) => const SplashPage(),
           '/login': (_) => LoginPage(),
           '/home': (_) => const HomePageV2(),
-          '/simulator': (context) => const SimulatorPage(),
         },
         theme: ThemeData(
-          //primaryColor: Colors.green,
-          colorSchemeSeed: Colors.green,
+          primaryColor: Colors.green,
           textTheme: const TextTheme(labelMedium: AppTextStyles.label),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             showSelectedLabels: true,
