@@ -27,6 +27,7 @@ class AuthStore extends ValueNotifier<AuthState> {
       value = SucessAuthState(authUser);
       inLoader.value = false;
     } catch (e) {
+      inLoader.value = false;
       value = ErrorAuthState(e.toString());
     }
   }
