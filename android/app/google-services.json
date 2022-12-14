@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "243475154114",
+    "project_id": "new-finances",
+    "storage_bucket": "new-finances.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:243475154114:android:f32aba20a654d3c436675b",
+        "android_client_info": {
+          "package_name": "com.example.system_finances"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "243475154114-26cjqnlm2nl28qj2fohp7jsvhsbukk2h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAU6T1re7Gt5SVesqaEFSIukItFc5Sv1WU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "243475154114-26cjqnlm2nl28qj2fohp7jsvhsbukk2h.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "243475154114-7eqeceq6et576t038h23ad4boec20qsj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.systemFinances"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
