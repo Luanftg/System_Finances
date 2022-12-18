@@ -106,6 +106,7 @@ class _HomePageV2State extends State<HomePageV2> {
                   icon: const Icon(Icons.compare_arrows),
                 ),
                 FloatingActionButton.small(
+                  heroTag: 'hometag',
                   backgroundColor: Colors.green,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
