@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:system_finances/services/prefs_services.dart';
+import 'package:system_finances/stores/splash_store.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({Key? key}) : super(key: key);
@@ -9,18 +9,19 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  final SplashStore _splashStore = SplashStore();
   @override
   void initState() {
     super.initState();
 
-    Future.wait([
-      PrefsService.isAuth(),
-      Future.delayed(const Duration(seconds: 3)),
-    ]).then(
-      (value) => value[0]
-          ? Navigator.of(context).pushReplacementNamed('/home')
-          : Navigator.of(context).pushReplacementNamed('/login'),
-    );
+    Future.wait({
+      _splashStore.isAuthenticated(),
+      Future.delayed(const Duration(seconds: 2))
+    }).then((value) => value[0]
+        ? Navigator.of(context)
+            .pushNamedAndRemoveUntil('/home', (route) => true)
+        : Navigator.of(context)
+            .pushNamedAndRemoveUntil('/login', (route) => true));
   }
 
   @override
