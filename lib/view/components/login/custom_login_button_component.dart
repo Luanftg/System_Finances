@@ -36,7 +36,8 @@ class CustomLoginButtonComponent extends StatelessWidget {
                     : await authStore.register(authModel);
 
                 if (authStore.value is SucessAuthState) {
-                  navContext.pushReplacementNamed('/home');
+                  navContext.pushNamedAndRemoveUntil(
+                      '/home', ((route) => true));
                 } else if (authStore.value is ErrorAuthState) {
                   scaffoldContext.showSnackBar(
                     const SnackBar(
