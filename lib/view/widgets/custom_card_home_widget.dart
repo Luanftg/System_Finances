@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:system_finances/constants/app_colors.dart';
 import 'package:system_finances/models/user_model.dart';
 import 'package:system_finances/view/components/home/custom_linear_accounts.dart';
 
@@ -113,7 +114,8 @@ class CustomCardHomeWidget extends StatelessWidget {
           //const Spacer(),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                fixedSize: const Size(300, 20), backgroundColor: Colors.green),
+                fixedSize: const Size(300, 20),
+                backgroundColor: AppColors.primary),
             onPressed: () {},
             child: const Text('Gerenciar Contas'),
           ),

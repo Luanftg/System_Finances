@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:system_finances/constants/app_colors.dart';
 import 'package:system_finances/models/user_model.dart';
-import 'package:system_finances/services/prefs_services.dart';
+import 'package:system_finances/repositories/auth_repository.dart';
+import 'package:system_finances/repositories/auth_repository_imp.dart';
+
 import 'package:system_finances/view/components/home/custom_linear_home_contact.dart';
 
 class CustomMenuContainerWidget extends StatelessWidget {
-  const CustomMenuContainerWidget({super.key, required this.user});
+  CustomMenuContainerWidget({super.key, required this.user});
 
+  final AuthRepository _authRepository = AuthRepositoryImp();
   final UserModel user;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height / 4,
-      color: Colors.green,
+      color: AppColors.primary,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -22,9 +26,9 @@ class CustomMenuContainerWidget extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              PrefsService.logout();
+              _authRepository.logout();
               Navigator.of(context)
-                  .pushNamedAndRemoveUntil('/login', (_) => true);
+                  .pushNamedAndRemoveUntil('/login', (_) => false);
             },
             icon: const Icon(Icons.logout),
             alignment: Alignment.topRight,
