@@ -8,7 +8,7 @@ class AppTextStyles {
   static const TextStyle caption = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 9.0,
-    color: AppColors.caption,
+    color: AppColors.black38,
   );
   static const TextStyle headlineLarge = TextStyle(
     fontWeight: FontWeight.w500,
@@ -25,6 +25,11 @@ class AppTextStyles {
     fontSize: 20.0,
     color: AppColors.white70,
   );
+  static const TextStyle blackCaption = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 20.0,
+    color: AppColors.black,
+  );
   static const TextStyle profileData = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
@@ -40,6 +45,11 @@ class AppTextStyles {
   static const TextStyle whiteLabel = TextStyle(
     fontWeight: FontWeight.w500,
     fontSize: 14.0,
-    color: Colors.white70,
+    color: AppColors.white70,
+  );
+  static const TextStyle blackLabel = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 14.0,
+    color: AppColors.black,
   );
 }

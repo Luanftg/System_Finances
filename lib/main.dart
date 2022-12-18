@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:system_finances/constants/app_colors.dart';
 import 'package:system_finances/repositories/home_repository_imp.dart';
 import 'package:system_finances/stores/user_store.dart';
 
@@ -42,12 +43,12 @@ class MyApp extends StatelessWidget {
         },
         theme: ThemeData(
           //primaryColor: Colors.green,
-          colorSchemeSeed: Colors.green,
+          colorSchemeSeed: AppColors.primary,
           textTheme: const TextTheme(labelMedium: AppTextStyles.label),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             showSelectedLabels: true,
             showUnselectedLabels: true,
-            unselectedLabelStyle: TextStyle(color: Colors.green),
+            unselectedLabelStyle: TextStyle(color: AppColors.primary),
           ),
         ),
       ),
