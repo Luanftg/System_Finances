@@ -8,6 +8,9 @@ class AuthRepositoryImp implements AuthRepository {
   FirebaseAuth get _firebase => FirebaseAuth.instance;
 
   @override
+  User? get currentUser => _firebase.currentUser;
+
+  @override
   Future<AuthModel> authenticate(AuthModel authModel) async {
     try {
       var signIn = await _firebase.signInWithEmailAndPassword(
