@@ -18,12 +18,27 @@ class CustomMenuContainerWidget extends StatelessWidget {
       height: MediaQuery.of(context).size.height / 4,
       color: AppColors.primary,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomLinearContactWidget(
             contactName: user.name,
             pathContactImage: user.image,
           ),
+          const SizedBox(width: 16),
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    color: Colors.black54,
+                    blurRadius: 20,
+                    offset: Offset.zero,
+                  )
+                ],
+              )),
           IconButton(
             onPressed: () {
               _authRepository.logout();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:system_finances/constants/app_colors.dart';
 
 import 'custom_circular_contact_image.dart';
 
@@ -11,9 +12,10 @@ class CustomLinearContactWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             CustomCircularContactImage(
               pathContactImage: pathContactImage,
@@ -25,29 +27,16 @@ class CustomLinearContactWidget extends StatelessWidget {
               children: [
                 const Text(
                   'Olá !',
-                  style: TextStyle(color: Colors.white54),
+                  style: TextStyle(color: AppColors.white70),
                 ),
                 Text(
                   contactName,
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: AppColors.white),
                 ),
               ],
             ),
           ],
         ),
-        IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.notifications,
-              color: Colors.white,
-              shadows: [
-                Shadow(
-                  color: Colors.black54,
-                  blurRadius: 20,
-                  offset: Offset.zero,
-                )
-              ],
-            )),
       ],
     );
   }
