@@ -38,17 +38,14 @@ class LoginPage extends StatelessWidget {
               height: 15,
             ),
             CustomLoginButtonComponent(
-              isLogin: true,
-              label: 'Login',
-              buttonColor: Colors.green,
               authStore: _controller,
             ),
-            CustomLoginButtonComponent(
-              isLogin: false,
-              label: 'Register',
-              buttonColor: Colors.blue,
-              authStore: _controller,
-            ),
+            // CustomLoginButtonComponent(
+            //   isLogin: false,
+            //   label: 'Register',
+            //   buttonColor: Colors.blue,
+            //   authStore: _controller,
+            // ),
           ],
         ),
       ),
