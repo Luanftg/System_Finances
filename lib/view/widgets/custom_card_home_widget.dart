@@ -86,15 +86,12 @@ class CustomCardHomeWidget extends StatelessWidget {
               ],
             ),
           ),
-          //const Spacer(),
           ListView(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              //const SizedBox(height: 8),
               Text('Minhas Contas',
                   style: Theme.of(context).textTheme.titleMedium),
-              //const SizedBox(height: 8),
               CustomLinearAccounts(
                 caminhoDaImagem: caminhoDaImagem,
                 nomeDaConta: nomeDaConta,
@@ -111,10 +108,9 @@ class CustomCardHomeWidget extends StatelessWidget {
               ),
             ],
           ),
-          //const Spacer(),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                fixedSize: const Size(300, 20),
+                padding: const EdgeInsets.symmetric(horizontal: 64),
                 backgroundColor: AppColors.primary),
             onPressed: () {},
             child: const Text('Gerenciar Contas'),
