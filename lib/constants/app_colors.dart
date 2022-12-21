@@ -10,4 +10,5 @@ class AppColors {
   static const Color caption = Color(0xFFB8C5D0);
   static const Color black38 = Colors.black38;
   static const Color black = Colors.black;
+  static const Color blue = Colors.blue;
 }

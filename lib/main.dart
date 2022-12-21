@@ -44,6 +44,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           //primaryColor: Colors.green,
           colorSchemeSeed: AppColors.primary,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(AppColors.primary),
+                padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(vertical: 12))),
+          ),
           textTheme: const TextTheme(labelMedium: AppTextStyles.label),
           bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             showSelectedLabels: true,
