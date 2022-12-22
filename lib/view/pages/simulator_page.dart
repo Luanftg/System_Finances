@@ -46,10 +46,13 @@ class _SimulatorPageState extends State<SimulatorPage> {
       balance = valorFuturo!.totalValorFuturo;
       if (mounth == 12) {
         riskValue = 0;
+        riskLabel = 'Conservador - 1 ano';
       } else if (mounth == 60) {
         riskValue = 1;
+        riskLabel = 'Estrategista - 5 anos';
       } else {
         riskValue = 2;
+        riskLabel = 'Arriscado - 10 anos';
       }
       taxaAA = value.taxaAA;
     });
@@ -280,7 +283,7 @@ class _SimulatorPageState extends State<SimulatorPage> {
                       const SizedBox(height: 32),
                       ElevatedButton(
                         onPressed: () async {
-                          await _simulatorController.addSimulator(
+                          await _simulatorController.addOrUpdateSimulator(
                             currentValue.value,
                             monthValue,
                             mounth,

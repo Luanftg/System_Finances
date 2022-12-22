@@ -16,7 +16,7 @@ class SimulatorController {
   final notifier = ValueNotifier<SimulatorState>(SimulatorInitialState());
   SimulatorState get state => notifier.value;
 
-  Future<void> addSimulator(
+  Future<void> addOrUpdateSimulator(
     double initialValue,
     double mounthValue,
     int mounth,
@@ -31,7 +31,7 @@ class SimulatorController {
       taxaAA: taxaAA,
       userId: userId ?? '',
     );
-    await _simulatorRepository.addSimulatorValue(valorSimulado);
+    await _simulatorRepository.addOrUpdateSimulatorValue(valorSimulado);
     notifier.value = SimulatorSucessState(valorSimulado);
   }
 
@@ -39,8 +39,18 @@ class SimulatorController {
     notifier.value = SimulatorLoadingState();
     final userId = _authRepository.currentUser?.uid;
     final result = await _simulatorRepository.getList(userId ?? '');
-    notifier.value = SimulatorSucessState(result.first);
-    return result.first;
+    if (result.isNotEmpty) {
+      notifier.value = SimulatorSucessState(result.first);
+      return result.first;
+    }
+    var valorSimulado = ValorSimulado(
+        initialValue: 0,
+        mounthValue: 0,
+        mounth: 12,
+        taxaAA: 13.5,
+        userId: userId!);
+    notifier.value = SimulatorSucessState(valorSimulado);
+    return valorSimulado;
   }
 
   static double valorFuturoDosAportesMensais(

@@ -20,7 +20,20 @@ class SimulatorRepositoryImp implements SimulatorRepository {
   }
 
   @override
-  Future<void> addSimulatorValue(ValorSimulado valorSimulado) async {
-    await storage.collection('simulator').add(valorSimulado.toMap());
+  Future<void> addOrUpdateSimulatorValue(ValorSimulado valorSimulado) async {
+    final result = await storage
+        .collection('simulator')
+        .where('userId', isEqualTo: valorSimulado.userId)
+        .get();
+
+    if (result.docs.isNotEmpty) {
+      final docId = result.docs.first.id;
+      await storage
+          .collection('simulator')
+          .doc(docId)
+          .set(valorSimulado.toMap());
+    } else {
+      await storage.collection('simulator').add(valorSimulado.toMap());
+    }
   }
 }
