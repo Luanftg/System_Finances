@@ -8,7 +8,7 @@ void main() {
   final HomeRepository repository = HomeRepositoryImp();
 
   test('Espero que a entidade não seja nula', () async {
-    final response = await repository.getList();
+    final response = await repository.getUserLogged();
     log(response.toString());
     expect(response, isNotNull);
   });
