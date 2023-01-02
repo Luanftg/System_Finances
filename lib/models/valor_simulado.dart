@@ -1,22 +1,23 @@
 import 'dart:convert';
 
 class ValorSimulado {
-  final double mounthValue;
-  final int mounth;
-  final double taxaAA;
+  double mounthValue;
+  int month;
+  double taxaAA;
   final String userId;
-  final double initialValue;
+  double initialValue;
+
   ValorSimulado({
     required this.initialValue,
     required this.mounthValue,
-    required this.mounth,
+    required this.month,
     required this.taxaAA,
     required this.userId,
   });
 
   @override
   String toString() {
-    return 'ValorSimulado(initialValue: $initialValue, mountValue: $mounthValue, mounth: $mounth, taxaAA: $taxaAA, userId: $userId)';
+    return 'ValorSimulado(initialValue: $initialValue, mountValue: $mounthValue, month: $month, taxaAA: $taxaAA, userId: $userId)';
   }
 
   Map<String, dynamic> toMap() {
@@ -24,7 +25,7 @@ class ValorSimulado {
 
     result.addAll({'initialValue': initialValue});
     result.addAll({'mounthValue': mounthValue});
-    result.addAll({'mounth': mounth});
+    result.addAll({'mounth': month});
     result.addAll({'taxaAA': taxaAA});
     result.addAll({'userId': userId});
 
@@ -35,7 +36,7 @@ class ValorSimulado {
     return ValorSimulado(
       initialValue: map['initialValue']?.toDouble() ?? 0.0,
       mounthValue: map['mounthValue']?.toDouble() ?? 0.0,
-      mounth: map['mounth']?.toInt() ?? 0,
+      month: map['mounth']?.toInt() ?? 0,
       taxaAA: map['taxaAA']?.toDouble() ?? 0.0,
       userId: map['userId'] ?? '',
     );
