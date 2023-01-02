@@ -5,8 +5,8 @@ abstract class UserState {}
 class InitialUserState extends UserState {}
 
 class SucessUserState extends UserState {
-  final List<UserModel> users;
-  SucessUserState(this.users);
+  final UserModel user;
+  SucessUserState(this.user);
 }
 
 class LoadindUserState extends UserState {}
