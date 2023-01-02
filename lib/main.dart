@@ -5,7 +5,7 @@ import 'package:system_finances/constants/app_colors.dart';
 import 'package:system_finances/repositories/home_repository_implementation.dart';
 import 'package:system_finances/stores/user_store.dart';
 
-import 'package:system_finances/view/pages/home_page_v2.dart';
+import 'package:system_finances/view/pages/home_page.dart';
 import 'package:system_finances/view/pages/login_page.dart';
 import 'package:system_finances/view/pages/simulator_page.dart';
 import 'package:system_finances/view/pages/splash_page.dart';

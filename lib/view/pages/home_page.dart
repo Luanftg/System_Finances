@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:system_finances/constants/app_colors.dart';
 import 'package:system_finances/main.dart';
 import 'package:system_finances/services/internet_connection_checker_service.dart';
 
@@ -24,7 +23,7 @@ class _HomePageV2State extends State<HomePageV2> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<UserStore>().fetchUsers();
+      context.read<UserStore>().fetchUser();
     });
   }
 
@@ -36,12 +35,11 @@ class _HomePageV2State extends State<HomePageV2> {
     final conection = InternetConnectionCheckerService.haveConnection();
     conection.then((value) {
       isConnected = value;
-      log(isConnected.toString());
     });
 
     if (state is LoadindUserState) {
       child = const Center(
-        child: CircularProgressIndicator(color: Colors.green),
+        child: CircularProgressIndicator(color: AppColors.primary),
       );
     }
     if (state is ErrorUserState) {
@@ -51,14 +49,14 @@ class _HomePageV2State extends State<HomePageV2> {
     }
 
     if (state is SucessUserState) {
-      final firstUser = state.users;
+      final userLogged = state.user;
       child = Stack(
         children: <Widget>[
           Positioned(
               top: 0,
               right: 0,
               left: 0,
-              child: CustomMenuContainerWidget(user: firstUser[0])),
+              child: CustomMenuContainerWidget(user: userLogged)),
           Positioned(
             top: 160,
             left: 0,
@@ -68,12 +66,8 @@ class _HomePageV2State extends State<HomePageV2> {
               child: Column(
                 children: [
                   CustomCardHomeWidget(
-                      users: state.users,
-                      caminhoDaImagem: state
-                          .users[0].accountList![0].bandeira.caminhoDaImagem,
-                      nomeDaConta: state.users[0].accountList![0].bandeira.nome,
-                      tipoDeConta: 'Conta-Corrente',
-                      saldo: state.users[0].accountList![0].bandeira.balance),
+                    user: userLogged,
+                  ),
                   const CustomCreditCard(),
                 ],
               ),
@@ -84,12 +78,12 @@ class _HomePageV2State extends State<HomePageV2> {
     }
 
     return Scaffold(
-      backgroundColor: Colors.white54,
+      backgroundColor: AppColors.white54,
       body: child ?? Container(),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.white,
+        color: AppColors.white,
         child: IconTheme(
-          data: const IconThemeData(color: Colors.grey),
+          data: const IconThemeData(color: AppColors.grey),
           child: Padding(
             padding: const EdgeInsets.all(12),
             child: Row(
@@ -107,7 +101,7 @@ class _HomePageV2State extends State<HomePageV2> {
                 ),
                 FloatingActionButton.small(
                   heroTag: 'hometag',
-                  backgroundColor: Colors.green,
+                  backgroundColor: AppColors.primary,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),

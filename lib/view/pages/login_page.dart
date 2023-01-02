@@ -7,9 +7,16 @@ import 'package:system_finances/stores/auth_store.dart';
 import '../components/login/custom_login_button_component.dart';
 import '../widgets/custom_text_field_widget.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
 
+  static bool isVisible = false;
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   final AuthStore _controller = AuthStore(AuthRepositoryImp());
 
   @override
@@ -23,7 +30,7 @@ class LoginPage extends StatelessWidget {
           children: [
             Icon(
               Icons.people,
-              size: MediaQuery.of(context).size.height * 0.3,
+              size: MediaQuery.of(context).size.height * 0.2,
             ),
             CustomTextFieldWidget(
               onChanged: _controller.setLogin,
@@ -34,18 +41,12 @@ class LoginPage extends StatelessWidget {
               label: 'Senha',
               obscureText: true,
             ),
-            const SizedBox(
-              height: 15,
-            ),
+            // const SizedBox(
+            //   height: 15,
+            // ),
             CustomLoginButtonComponent(
               authStore: _controller,
             ),
-            // CustomLoginButtonComponent(
-            //   isLogin: false,
-            //   label: 'Register',
-            //   buttonColor: Colors.blue,
-            //   authStore: _controller,
-            // ),
           ],
         ),
       ),
