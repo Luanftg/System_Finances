@@ -1,19 +1,20 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:system_finances/constants/app_text_styles.dart';
 import 'package:system_finances/view/components/home/custom_circular_contact_image.dart';
 
 class CustomLinearAccounts extends StatelessWidget {
-  final String valor;
-  final String caminhoDaImagem;
-  final String nomeDaConta;
-  final String tipoDeConta;
+  final String? valor;
+  final String? caminhoDaImagem;
+  final String? nomeDaConta;
+  final String? tipoDeConta;
 
   const CustomLinearAccounts({
     Key? key,
-    required this.valor,
-    required this.caminhoDaImagem,
-    required this.nomeDaConta,
-    required this.tipoDeConta,
+    this.valor,
+    this.caminhoDaImagem,
+    this.nomeDaConta,
+    this.tipoDeConta,
   }) : super(key: key);
 
   @override
@@ -33,18 +34,18 @@ class CustomLinearAccounts extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  nomeDaConta,
-                  style: const TextStyle(color: Colors.black87),
+                  nomeDaConta ?? 'nomedaConta',
+                  style: AppTextStyles.blackLabel,
                 ),
                 Text(
-                  tipoDeConta,
-                  style: const TextStyle(color: Colors.black54),
+                  tipoDeConta ?? 'tipoDeConta',
+                  style: AppTextStyles.label,
                 ),
               ],
             ),
           ],
         ),
-        Text('R\$ $valor')
+        Text('R\$ $valor?? 0.00')
       ],
     );
   }

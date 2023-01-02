@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:system_finances/constants/app_colors.dart';
 
 class CustomCircularContactImage extends StatelessWidget {
-  final String pathContactImage;
+  final String? pathContactImage;
   const CustomCircularContactImage({
     Key? key,
-    required this.pathContactImage,
+    this.pathContactImage,
   }) : super(key: key);
 
   @override
@@ -15,9 +16,10 @@ class CustomCircularContactImage extends StatelessWidget {
       height: 60,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: Colors.green,
+        color: AppColors.primary,
         image: DecorationImage(
-          image: NetworkImage(pathContactImage),
+          image: NetworkImage(pathContactImage ??
+              'https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg'),
         ),
       ),
     );

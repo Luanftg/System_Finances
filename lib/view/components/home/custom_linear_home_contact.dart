@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:system_finances/constants/app_colors.dart';
+import 'package:system_finances/constants/app_text_styles.dart';
 
 import 'custom_circular_contact_image.dart';
 
 class CustomLinearContactWidget extends StatelessWidget {
-  final String pathContactImage;
-  final String contactName;
+  final String? pathContactImage;
+  final String? contactName;
   const CustomLinearContactWidget(
-      {Key? key, required this.pathContactImage, required this.contactName})
+      {Key? key, this.pathContactImage, this.contactName})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -17,9 +17,7 @@ class CustomLinearContactWidget extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            CustomCircularContactImage(
-              pathContactImage: pathContactImage,
-            ),
+            const CustomCircularContactImage(),
             const SizedBox(width: 8),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,11 +25,11 @@ class CustomLinearContactWidget extends StatelessWidget {
               children: [
                 const Text(
                   'Olá !',
-                  style: TextStyle(color: AppColors.white70),
+                  style: AppTextStyles.whiteLabel,
                 ),
                 Text(
-                  contactName,
-                  style: const TextStyle(color: AppColors.white),
+                  contactName ?? "Bem Vindo ao App",
+                  style: AppTextStyles.whiteLabel,
                 ),
               ],
             ),
