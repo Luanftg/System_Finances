@@ -52,4 +52,19 @@ class AppTextStyles {
     fontSize: 14.0,
     color: AppColors.black,
   );
+  static const TextStyle balancelackLabel = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 16.0,
+    color: AppColors.black,
+  );
+  static const TextStyle titleslackLabel = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 18.0,
+    color: AppColors.black,
+  );
+  static const TextStyle generalGrayBalance = TextStyle(
+    fontWeight: FontWeight.w300,
+    fontSize: 16.0,
+    color: AppColors.grey,
+  );
 }
