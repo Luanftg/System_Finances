@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (_) => UserStore(HomeRepositoryImp())),
         ChangeNotifierProvider(
             create: (_) => UserStore(HomeRepositoryImpementation())),
       ],
