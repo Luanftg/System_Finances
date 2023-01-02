@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:system_finances/constants/app_text_styles.dart';
 import 'package:system_finances/controllers/simulator_controller.dart';
+import 'package:system_finances/models/valor_simulado.dart';
 import 'package:system_finances/repositories/auth_repository_imp.dart';
 import 'package:system_finances/repositories/simulator_repository_imp.dart';
 import 'package:system_finances/state/simulator_state.dart';
@@ -19,44 +20,33 @@ class _SimulatorPageState extends State<SimulatorPage> {
   final SimulatorController _simulatorController =
       SimulatorController(SimulatorRepositoryImp(), AuthRepositoryImp());
 
-  ValueNotifier<double> currentValue = ValueNotifier(0.0);
-  double monthValue = 0;
-  double riskValue = 0;
-  String riskLabel = 'Conservador - 1 ano';
-  int mounth = 0;
-  int ano = DateTime.now().year;
-  String year = '';
-  ValorFuturo? valorFuturo;
-  double taxaAA = 12.0;
-  double balance = 0;
+  double get riskValue => _simulatorController.riskValue;
+  String get riskLabel => _simulatorController.riskLabel;
+  String get year => _simulatorController.year;
+
+  ValorFuturo? get valorFuturo => _simulatorController.valorFuturo.value;
+  ValorSimulado? get valorSimulado => _simulatorController.valorSimulado.value;
+
+  double get balance => _simulatorController.balance;
 
   @override
   void initState() {
     super.initState();
+    _simulatorController.valorSimulado.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    _simulatorController.valorFuturo.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
+    });
     _init();
   }
 
   _init() async {
-    _simulatorController.getList().then((value) {
-      monthValue = value.mounthValue;
-      currentValue.value = value.initialValue;
-      mounth = value.mounth;
-      valorFuturo = SimulatorController.pegaValorFuturoERendimentoTotal(
-          currentValue.value, monthValue, value.taxaAA, mounth);
-      balance = valorFuturo!.totalValorFuturo;
-      if (mounth == 12) {
-        riskValue = 0;
-        riskLabel = 'Conservador - 1 ano';
-      } else if (mounth == 60) {
-        riskValue = 1;
-        riskLabel = 'Estrategista - 5 anos';
-      } else {
-        riskValue = 2;
-        riskLabel = 'Arriscado - 10 anos';
-      }
-      taxaAA = value.taxaAA;
-    });
-    setState(() {});
+    await _simulatorController.fetchSimulator();
   }
 
   @override
@@ -67,7 +57,7 @@ class _SimulatorPageState extends State<SimulatorPage> {
       ),
       backgroundColor: AppColors.black38,
       body: ValueListenableBuilder<SimulatorState>(
-        valueListenable: _simulatorController.notifier,
+        valueListenable: _simulatorController,
         builder: ((context, state, _) {
           if (state is SimulatorLoadingState) {
             return const Center(
@@ -119,43 +109,7 @@ class _SimulatorPageState extends State<SimulatorPage> {
                           label: riskLabel,
                           value: riskValue,
                           onChanged: (double value) {
-                            setState(() {
-                              riskValue = value;
-                              if (riskValue == 0) {
-                                riskLabel = 'Conservador - 1 ano';
-                                mounth = 12;
-                                valorFuturo = SimulatorController
-                                    .pegaValorFuturoERendimentoTotal(
-                                        currentValue.value,
-                                        monthValue,
-                                        taxaAA,
-                                        mounth);
-                                balance = valorFuturo!.totalValorFuturo;
-                                year = (ano + mounth / 12).toStringAsFixed(0);
-                              } else if (riskValue == 1) {
-                                riskLabel = 'Estrategista - 5 anos';
-                                mounth = 60;
-                                valorFuturo = SimulatorController
-                                    .pegaValorFuturoERendimentoTotal(
-                                        currentValue.value,
-                                        monthValue,
-                                        taxaAA,
-                                        mounth);
-                                balance = valorFuturo!.totalValorFuturo;
-                                year = (ano + mounth / 12).toStringAsFixed(0);
-                              } else {
-                                riskLabel = 'Arriscado - 10 anos';
-                                mounth = 120;
-                                valorFuturo = SimulatorController
-                                    .pegaValorFuturoERendimentoTotal(
-                                        currentValue.value,
-                                        monthValue,
-                                        taxaAA,
-                                        mounth);
-                                balance = valorFuturo!.totalValorFuturo;
-                                year = (ano + mounth / 12).toStringAsFixed(0);
-                              }
-                            });
+                            _simulatorController.changeRisk(value);
                           },
                         ),
                       ),
@@ -168,9 +122,9 @@ class _SimulatorPageState extends State<SimulatorPage> {
                           ),
                           const SizedBox(width: 16),
                           Text(
-                            'R\$ ${currentValue.value.round().toStringAsFixed(2)}',
+                            'R\$ ${valorSimulado?.initialValue.round().toStringAsFixed(2)}',
                             style: AppTextStyles.profileData
-                                .copyWith(color: Colors.green.shade400),
+                                .copyWith(color: AppColors.primaryShade400),
                           ),
                         ],
                       ),
@@ -183,20 +137,11 @@ class _SimulatorPageState extends State<SimulatorPage> {
                               return '${value.round().toStringAsFixed(2)} reais';
                             },
                             activeColor: AppColors.primary,
-                            label: currentValue.value.round().toString(),
-                            value: currentValue.value,
+                            label:
+                                valorSimulado?.initialValue.round().toString(),
+                            value: valorSimulado?.initialValue ?? 0,
                             onChanged: (double value) {
-                              setState(() {
-                                currentValue.value = value;
-                                valorFuturo = SimulatorController
-                                    .pegaValorFuturoERendimentoTotal(
-                                        currentValue.value,
-                                        monthValue,
-                                        taxaAA,
-                                        mounth);
-                                balance = valorFuturo!.totalValorFuturo;
-                                year = (ano + mounth / 12).toStringAsFixed(0);
-                              });
+                              _simulatorController.changeInitialValue;
                             }),
                       ),
                       Row(
@@ -208,7 +153,7 @@ class _SimulatorPageState extends State<SimulatorPage> {
                           ),
                           const SizedBox(width: 8),
                           Text(
-                            'R\$ ${monthValue.round()}',
+                            'R\$ ${valorSimulado?.mounthValue.round()}',
                             style: AppTextStyles.profileData
                                 .copyWith(color: Colors.green.shade400),
                           ),
@@ -223,27 +168,17 @@ class _SimulatorPageState extends State<SimulatorPage> {
                               return '${value.round()} reais';
                             },
                             activeColor: AppColors.primary,
-                            label: monthValue.round().toString(),
-                            value: monthValue,
+                            label: '${valorSimulado?.mounthValue.round()}',
+                            value: valorSimulado?.mounthValue ?? 0,
                             onChanged: (double value) {
-                              setState(() {
-                                monthValue = value;
-                                valorFuturo = SimulatorController
-                                    .pegaValorFuturoERendimentoTotal(
-                                        currentValue.value,
-                                        monthValue,
-                                        taxaAA,
-                                        mounth);
-                                balance = valorFuturo!.totalValorFuturo;
-                                year = (ano + mounth / 12).toStringAsFixed(0);
-                              });
+                              _simulatorController.changeMonthValue(value);
                             }),
                       ),
                     ]),
                   ),
                   Container(
                     padding: const EdgeInsetsDirectional.all(32),
-                    color: Colors.white,
+                    color: AppColors.white,
                     child: Column(children: [
                       Text('Em $year, você terá:',
                           style: AppTextStyles.blackCaption),
@@ -266,14 +201,14 @@ class _SimulatorPageState extends State<SimulatorPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('$mounth meses',
+                          Text('${valorSimulado?.month} meses',
                               style: AppTextStyles.blackLabel),
                           valorFuturo == null
                               ? const Text('--')
                               : Text(
-                                  'R\$ ${valorFuturo!.rendimentoTotal.toStringAsFixed(2)}',
+                                  'R\$ ${valorFuturo?.rendimentoTotal.toStringAsFixed(2)}',
                                   style: AppTextStyles.blackLabel),
-                          Text('${taxaAA.toStringAsFixed(2)} %',
+                          Text('${valorSimulado!.taxaAA.toStringAsFixed(2)} %',
                               style: AppTextStyles.blackLabel),
                         ],
                       ),
@@ -284,10 +219,10 @@ class _SimulatorPageState extends State<SimulatorPage> {
                       ElevatedButton(
                         onPressed: () async {
                           await _simulatorController.addOrUpdateSimulator(
-                            currentValue.value,
-                            monthValue,
-                            mounth,
-                            taxaAA,
+                            valorSimulado?.initialValue ?? 0,
+                            valorSimulado?.mounthValue ?? 0,
+                            valorSimulado!.month,
+                            valorSimulado!.taxaAA,
                           );
                         },
                         child: Row(
