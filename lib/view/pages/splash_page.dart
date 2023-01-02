@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:system_finances/constants/app_colors.dart';
 import 'package:system_finances/stores/splash_store.dart';
 
 class SplashPage extends StatefulWidget {
@@ -27,10 +28,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.green,
+      color: AppColors.primary,
       child: const Center(
         child: CircularProgressIndicator(
-          color: Colors.white54,
+          color: AppColors.white54,
         ),
       ),
     );

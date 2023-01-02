@@ -7,10 +7,10 @@ import 'package:system_finances/repositories/auth_repository_imp.dart';
 import 'package:system_finances/view/components/home/custom_linear_home_contact.dart';
 
 class CustomMenuContainerWidget extends StatelessWidget {
-  CustomMenuContainerWidget({super.key, required this.user});
+  CustomMenuContainerWidget({super.key, this.user});
 
   final AuthRepository _authRepository = AuthRepositoryImp();
-  final UserModel user;
+  final UserModel? user;
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +22,15 @@ class CustomMenuContainerWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CustomLinearContactWidget(
-            contactName: user.name,
-            pathContactImage: user.image,
+            contactName: user?.name ?? user?.email,
+            pathContactImage: user?.image,
           ),
           const SizedBox(width: 16),
           IconButton(
               onPressed: () {},
               icon: const Icon(
                 Icons.notifications,
-                color: Colors.white,
+                color: AppColors.white,
                 shadows: [
                   Shadow(
                     color: Colors.black54,
@@ -47,7 +47,7 @@ class CustomMenuContainerWidget extends StatelessWidget {
             },
             icon: const Icon(Icons.logout),
             alignment: Alignment.topRight,
-            color: Colors.white,
+            color: AppColors.white,
           ),
         ],
       ),

@@ -1,36 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:system_finances/constants/app_colors.dart';
+import 'package:system_finances/constants/app_text_styles.dart';
 import 'package:system_finances/models/user_model.dart';
 import 'package:system_finances/view/components/home/custom_linear_accounts.dart';
 
 class CustomCardHomeWidget extends StatelessWidget {
-  final double saldo;
-  final String caminhoDaImagem;
-  final String nomeDaConta;
-  final String tipoDeConta;
-  final List<UserModel> users;
+  final UserModel? user;
 
-  const CustomCardHomeWidget(
-      {Key? key,
-      required this.saldo,
-      required this.caminhoDaImagem,
-      required this.nomeDaConta,
-      required this.tipoDeConta,
-      required this.users})
-      : super(key: key);
+  const CustomCardHomeWidget({Key? key, this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final listaDeContasDoUsuario = user?.accountList;
     return Container(
       height: 360,
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.all(10),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.white,
         borderRadius: BorderRadius.all(Radius.circular(15)),
         boxShadow: [
           BoxShadow(
-            color: Colors.white,
+            color: AppColors.white,
             offset: Offset.zero,
             blurRadius: 10,
           ),
@@ -50,26 +41,22 @@ class CustomCardHomeWidget extends StatelessWidget {
                   children: [
                     Container(
                       width: 8,
-                      color: Colors.green,
+                      color: AppColors.primary,
                       height: 50,
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(8, 8, 0, 0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Saldo geral',
-                              style: TextStyle(
-                                color: Colors.black54,
-                                decoration: TextDecoration.none,
-                                fontSize: 16,
-                              )),
+                          const Text(
+                            'Saldo geral',
+                            style: AppTextStyles.generalGrayBalance,
+                          ),
+                          const SizedBox(height: 2),
                           Text(
-                            'R\$ ${users[0].balance}',
-                            style: const TextStyle(
-                              color: Colors.black87,
-                              decoration: TextDecoration.none,
-                              fontSize: 16,
-                            ),
+                            'R\$ ${user?.balance ?? '0.00'}',
+                            style: AppTextStyles.balancelackLabel,
                           ),
                         ],
                       ),
@@ -79,34 +66,27 @@ class CustomCardHomeWidget extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.fromLTRB(0, 8, 16, 0),
                   child: Icon(
-                    Icons.visibility_off_outlined,
-                    color: Colors.black54,
+                    Icons.visibility_outlined,
+                    color: AppColors.black38,
                   ),
                 ),
               ],
             ),
           ),
-          ListView(
+          const Text('Minhas Contas', style: AppTextStyles.titleslackLabel),
+          ListView.builder(
+            itemCount: listaDeContasDoUsuario?.length ?? 0,
+            itemBuilder: (context, index) {
+              return CustomLinearAccounts(
+                caminhoDaImagem:
+                    listaDeContasDoUsuario?[index].bandeira.caminhoDaImagem,
+                nomeDaConta: listaDeContasDoUsuario?[index].bandeira.nome,
+                tipoDeConta: listaDeContasDoUsuario?[index].tipoDeConta,
+                valor: '${listaDeContasDoUsuario?[index].bandeira.balance}',
+              );
+            },
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            children: [
-              Text('Minhas Contas',
-                  style: Theme.of(context).textTheme.titleMedium),
-              CustomLinearAccounts(
-                caminhoDaImagem: caminhoDaImagem,
-                nomeDaConta: nomeDaConta,
-                tipoDeConta: tipoDeConta,
-                valor: '$saldo',
-              ),
-              const Divider(),
-              CustomLinearAccounts(
-                caminhoDaImagem:
-                    users[0].accountList![1].bandeira.caminhoDaImagem,
-                nomeDaConta: users[0].accountList![1].bandeira.nome,
-                tipoDeConta: tipoDeConta,
-                valor: (users[0].accountList![1].bandeira.balance).toString(),
-              ),
-            ],
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
