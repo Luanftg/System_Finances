@@ -10,11 +10,12 @@ class AuthStore extends ValueNotifier<AuthState> {
   ValueNotifier<bool> inLoader = ValueNotifier<bool>(false);
   String? login;
   String? pass;
+  String? name;
 
   AuthStore(this._authRepository) : super(InitialAuthState());
 
   setLogin(String value) => login = value;
-
+  setName(String value) => name = value;
   setPass(String value) => pass = value;
 
   Future authenticate(AuthModel authModel) async {
